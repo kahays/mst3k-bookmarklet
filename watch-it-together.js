@@ -6,6 +6,9 @@ if (!window['YT'])
 
 function onYouTubeIframeAPIReady()
 {
+	/* Make it easier to keep the message box on top. */
+	$(".link").wrapAll("<div id='embed_wrapper'/>");
+
 	/*
 	** We can attach the player API first, since we 1) only change the source of the
 	** frame, not the frame itself, so the player stays put, and 2) the player will
@@ -159,12 +162,6 @@ function makeControlButtonInactive()
 
 function showMessage(text)
 {
-	/* Place message box on top. */
-	if (!getCurrentVideoFrame().nextElementSibling)
-	{
-		$("#message_box").insertAfter(getCurrentVideoFrame());
-	}
-
 	$("#message_box").text(text).show();
 }
 
@@ -193,7 +190,7 @@ function initializeUI()
 	  .insertAfter("h2"); /* Insert after movie title, so it'll settle near the table. */
 
 	/* Set up relative positioning for messages later on. */
-	$(".link").css('position', 'relative');
+	$("#embed_wrapper").css('position', 'relative');
 
 	/* Set up the messaging box. */
 	$("<a>")
@@ -208,5 +205,5 @@ function initializeUI()
 		left: '20%', /* The center, 50%, minus half the width. */
 		backgroundColor: '#fafafa',
 		borderRadius: '4px' })
-	  .appendTo(getCurrentVideoFrame().parentElement);
+	  .appendTo("#embed_wrapper");
 }
