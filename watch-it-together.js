@@ -93,9 +93,35 @@ function catchUp()
 		/* Avoid jitter if timers fire a little early and the message was previously cleared. */
 		if (elapsed < -0.3)
 		{
-			showMessage(	"This video will automatically start playing at "
-					+ localStart().toLocaleTimeString({}, { hour: "numeric", minute: "numeric" })
-					+ "! Click the \"Watch it together\" button to cancel, or click to clear this message.");
+			var message = "This video will automatically start playing at ";
+			if (toLocaleTimeStringSupportsLocales())
+			{
+				message += localStart().toLocaleTimeString({}, { hour: "numeric", minute: "numeric" });
+			}
+			else
+			{
+				var start = localStart();
+				var afternoon = (start.getHours() >= 12);
+
+				/* Convert from 24-hour time. */
+				var hour = start.getHours() % 12;
+				if (hour === 0)
+				{
+					hour = 12;
+				}
+
+				/* Pad minutes to two digits. */
+				var minutes = start.getMinutes();
+				if (minutes < 10)
+				{
+					minutes = "0" + minutes;
+				}
+
+				message += hour + ":" + minutes + " " + (afternoon ? "PM" : "AM");
+			}
+			message += "! Click the \"Watch it together\" button to cancel, or click to clear this message.";
+
+			showMessage(message);
 		}
 		makeControlButtonActive();
 
@@ -206,4 +232,18 @@ function initializeUI()
 		backgroundColor: '#fafafa',
 		borderRadius: '4px' })
 	  .appendTo("#embed_wrapper");
+}
+
+/* From the MDN documentation. Thanks! */
+function toLocaleTimeStringSupportsLocales()
+{
+	try
+	{
+		new Date().toLocaleTimeString('i');
+	}
+	catch (e)
+	{
+		return e.name === 'RangeError';
+	}
+	return false;
 }
