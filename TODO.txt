@@ -1,0 +1,10 @@
+BUGS
+- jumpstart() doesn't fire in IE off of onReady. Make it visible but with height zero so it'll fire?
+- Fix IE message overlay.
+- Fix Safari date rendering (doesn't support toLocaleTimeString().)
+- Give IDs and permanent places to UI buttons.
+- Collect CSS into actual classes.
+
+ENHANCEMENTS
+- Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
+- Remove header in theater mode?
