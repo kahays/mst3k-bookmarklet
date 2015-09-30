@@ -1,9 +1,9 @@
-if (!$("#wrapper").size())
+if (!$("#user_content").size())
 {
 	/* Collect the various sections into groupings. */
 	$("#user_bar, .function_bar").wrapAll("<div id='tool_header'/>");
-	$("#info_bar, #tab_bar, #posts").wrapAll("<div id='wrapper'/>");
-	$("#content > :not(#tool_header, #wrapper)").wrapAll("<div id='remnants'/>");
+	$("#info_bar, #tab_bar, #posts").wrapAll("<div id='user_content'/>");
+	$("#content > :not(#tool_header, #user_content)").wrapAll("<div id='video_content'/>");
 
 	/* Add control button. */
 	var uiControl = $("<label><input type='checkbox' value='?'> Theater mode</label>")
@@ -40,21 +40,24 @@ function styleTheaterMode()
 	  });
 
 	/* Split movie and user content to the left and right. */
-	$("#remnants").css({
+	$("#video_content").css({
 		float: 'left',
 		width: '650px' /* Constant from CSS class for #content */
 	});
-	$("#wrapper")
+	$("#user_content")
 	  .css({
 		position: 'relative',
 		float: 'right',
 		marginRight: '-20px' /* Constant from CSS class for .link */
 	});
 
+	/* Reduce padding on user tabs so they can compress more without linebreaks. */
+	$("#tab_bar > *").css('margin', '0');
+
 	function dynamicStyling()
 	{
 		/* Set width to nest user content alongside the movie. */
-		$("#wrapper").width(function() {
+		$("#user_content").width(function() {
 			return	$("#content").width()
 				- $("div.link:visible").outerWidth()
 				- parseInt($("div.link:visible").css('margin-left'), 10);
@@ -62,7 +65,7 @@ function styleTheaterMode()
 
 		/* Chat scrolls down, so align bottom of chat with bottom of the movie block. */
 		$("#tlkio").height(function(){
-			return 	$("#remnants").outerHeight()
+			return 	$("#video_content").outerHeight()
 				- $("#posts").position().top /* Convoluted because to set height properly, all elements in the calculation must be visible. So no self-referencing. */
 				- 2*parseInt($("#posts").css('padding-top'), 10);
 				- 2*parseInt($("#posts").css('border-top'), 10);
@@ -76,7 +79,7 @@ function styleTheaterMode()
 function unstyleTheaterMode()
 {
 	$(window).off("resize");
-	$("#content").parent().add("#remnants, #content, #wrapper").removeAttr("style");
+	$("#content").parent().add("#video_content, #content, #user_content, #tab_bar > *").removeAttr("style");
 	$("#tlkio").height('1000px'); /* Constant from source */
 	$("#sidebar").show();
 }
