@@ -3,6 +3,8 @@ BUGS
 - Fix IE message overlay.
 - Give IDs and permanent places to UI buttons.
 - Collect CSS into actual classes.
+- Only works with YouTube embeds.
+- Don't pollute the global namespace.
 
 ENHANCEMENTS
 - Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
