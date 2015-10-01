@@ -1,5 +1,4 @@
 BUGS
-- jumpstart() doesn't fire in IE off of onReady. Make it visible but with height zero so it'll fire?
 - Fix IE message overlay.
 - Give IDs and permanent places to UI buttons.
 - Collect CSS into actual classes.

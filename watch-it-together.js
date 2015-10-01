@@ -9,6 +9,19 @@ function onYouTubeIframeAPIReady()
 	/* Make it easier to keep the message box on top. */
 	$(".link").wrapAll("<div id='embed_wrapper'/>");
 
+	/* Hack to get IE to fire the onReady from the YouTube API. */
+	$(".link")
+	  .each(function(index, container) {
+	  	if (container.style.display !== "block")
+		{
+			var frame = $(container).find("iframe");
+			frame
+			  .prop("oldHeight", frame.height())
+			  .height(0);
+			container.style.display = "block";
+		}
+	  });
+
 	/*
 	** We can attach the player API first, since we 1) only change the source of the
 	** frame, not the frame itself, so the player stays put, and 2) the player will
@@ -60,6 +73,17 @@ function jumpstart()
 		++this.completedLoads;
 		if (this.completedLoads === getVideoFrames().length)
 		{
+			/* Reverse IE hack since we've jumpstarted. */
+			$(".link")
+			  .each(function(index, container) {
+			  	if ($(container).find("iframe").height() === 0)
+				{
+					container.style.display = "none";
+					var frame = $(container).find("iframe");
+					frame.height(frame.prop("oldHeight"));
+				}
+			  });
+
 			initializeUI();
 			catchUp();
 		}
