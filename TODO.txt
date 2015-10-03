@@ -3,6 +3,9 @@ BUGS
 - Give IDs and permanent places to UI buttons.
 - Collect CSS into actual classes.
 - Only works with YouTube embeds.
+- Add support for Vimeo API.
+- Add support for Metacafe.
+- Add support for DailyMotion.
 - Don't pollute the global namespace.
 
 ENHANCEMENTS
