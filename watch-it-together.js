@@ -149,9 +149,9 @@ function catchUp()
 		}
 		makeControlButtonActive();
 
-		if (!current.timeoutId)
+		if (!window.MST3KTimeoutID)
 		{
-			current.timeoutId = setTimeout(catchUp, -elapsed);
+			window.MST3KTimeoutID = setTimeout(catchUp, -elapsed);
 		}
 	}
 	else if (elapsed > 1000*current.player.getDuration())
@@ -172,7 +172,7 @@ function catchUp()
 
 function toggle()
 {
-	if (!getCurrentVideoFrame().timeoutId)
+	if (!window.MST3KTimeoutID)
 	{
 		catchUp();
 	}
@@ -186,11 +186,10 @@ function toggle()
 
 function clearTimer()
 {
-	var current = getCurrentVideoFrame();
-	if (current.timeoutId)
+	if (window.MST3KTimeoutID)
 	{
-		clearInterval(current.timeoutId);
-		current.timeoutId = false;
+		clearInterval(window.MST3KTimeoutID);
+		window.MST3KTimeoutID = false;
 	}
 }
 
