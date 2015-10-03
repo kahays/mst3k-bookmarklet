@@ -1,9 +1,9 @@
-if (!$("#user_content").size())
+if (!$("#user-content").size())
 {
 	/* Collect the various sections into groupings. */
-	$("#user_bar, .function_bar").wrapAll("<div id='tool_header'/>");
-	$("#info_bar, #tab_bar, #posts").wrapAll("<div id='user_content'/>");
-	$("#content > :not(#tool_header, #user_content)").wrapAll("<div id='video_content'/>");
+	$("#user_bar, .function_bar").wrapAll("<div id='tool-header'/>");
+	$("#info_bar, #tab_bar, #posts").wrapAll("<div id='user-content'/>");
+	$("#content > :not(#tool-header, #user-content)").wrapAll("<div id='video-content'/>");
 
 	/* Add control button. */
 	var uiControl = $("<label><input type='checkbox' value='?'> Theater mode</label>")
@@ -40,11 +40,11 @@ function styleTheaterMode()
 	  });
 
 	/* Split movie and user content to the left and right. */
-	$("#video_content").css({
+	$("#video-content").css({
 		float: 'left',
 		width: '650px' /* Constant from CSS class for #content */
 	});
-	$("#user_content")
+	$("#user-content")
 	  .css({
 		position: 'relative',
 		float: 'right',
@@ -57,7 +57,7 @@ function styleTheaterMode()
 	function dynamicStyling()
 	{
 		/* Set width to nest user content alongside the movie. */
-		$("#user_content").width(function() {
+		$("#user-content").width(function() {
 			return	$("#content").width()
 				- $("div.link:visible").outerWidth()
 				- parseInt($("div.link:visible").css('margin-left'), 10);
@@ -65,7 +65,7 @@ function styleTheaterMode()
 
 		/* Chat scrolls down, so align bottom of chat with bottom of the movie block. */
 		$("#tlkio").height(function(){
-			return 	$("#video_content").outerHeight()
+			return 	$("#video-content").outerHeight()
 				- $("#posts").position().top /* Convoluted because to set height properly, all elements in the calculation must be visible. So no self-referencing. */
 				- 2*parseInt($("#posts").css('padding-top'), 10);
 				- 2*parseInt($("#posts").css('border-top'), 10);
@@ -79,7 +79,7 @@ function styleTheaterMode()
 function unstyleTheaterMode()
 {
 	$(window).off("resize");
-	$("#content").parent().add("#video_content, #content, #user_content, #tab_bar > *").removeAttr("style");
+	$("#content").parent().add("#video-content, #content, #user-content, #tab_bar > *").removeAttr("style");
 	$("#tlkio").height('1000px'); /* Constant from source */
 	$("#sidebar").show();
 }

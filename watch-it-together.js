@@ -7,7 +7,7 @@ if (!window['YT'])
 function onYouTubeIframeAPIReady()
 {
 	/* Make it easier to keep the message box on top. */
-	$(".link").wrapAll("<div id='embed_wrapper'/>");
+	$(".link").wrapAll("<div id='embed-wrapper'/>");
 
 	/* Hack to get IE to fire the onReady from the YouTube API. */
 	$(".link")
@@ -196,7 +196,7 @@ function clearTimer()
 
 function makeControlButtonActive()
 {
-	$("#watch_it_together").css({
+	$("#watch-it-together").css({
 		backgroundColor: '#ee0',
 		borderStyle: 'inset'
 	});
@@ -204,7 +204,7 @@ function makeControlButtonActive()
 
 function makeControlButtonInactive()
 {
-	$("#watch_it_together").css({
+	$("#watch-it-together").css({
 		backgroundColor: '#ffa',
 		borderStyle: 'outset'
 	});
@@ -212,19 +212,19 @@ function makeControlButtonInactive()
 
 function showMessage(text)
 {
-	$("#message_box").text(text).show();
+	$("#message-box").text(text).show();
 }
 
 function closeMessage()
 {
-	$("#message_box").hide();
+	$("#message-box").hide();
 }
 
 function initializeUI()
 {
 	/* Add control button. */
 	$("<a>Watch it together</a>")
-	  .prop('id', 'watch_it_together')
+	  .prop('id', 'watch-it-together')
 	  .prop('href', 'javascript: toggle();')
 	  .css({
 		display: 'block',
@@ -240,11 +240,11 @@ function initializeUI()
 	  .insertAfter("h2"); /* Insert after movie title, so it'll settle near the table. */
 
 	/* Set up relative positioning for messages later on. */
-	$("#embed_wrapper").css('position', 'relative');
+	$("#embed-wrapper").css('position', 'relative');
 
 	/* Set up the messaging box. */
 	$("<a>")
-	  .prop('id', 'message_box')
+	  .prop('id', 'message-box')
 	  .prop('href', 'javascript: closeMessage();')
 	  .css({
 		display: 'none',
@@ -255,7 +255,7 @@ function initializeUI()
 		left: '20%', /* The center, 50%, minus half the width. */
 		backgroundColor: '#fafafa',
 		borderRadius: '4px' })
-	  .appendTo("#embed_wrapper");
+	  .appendTo("#embed-wrapper");
 }
 
 /* From the MDN documentation. Thanks! */
