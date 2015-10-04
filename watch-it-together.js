@@ -182,6 +182,9 @@ function toggle()
 		closeMessage();
 		makeControlButtonInactive();
 	}
+
+	/* Let's not follow the fake link. */
+	return false;
 }
 
 function clearTimer()
@@ -217,6 +220,9 @@ function showMessage(text)
 function closeMessage()
 {
 	$("#message-box").hide();
+
+	/* Let's not follow the fake link. */
+	return false;
 }
 
 function initializeUI()
@@ -224,7 +230,7 @@ function initializeUI()
 	/* Add control button. */
 	$("<a>Watch it together</a>")
 	  .prop('id', 'watch-it-together')
-	  .prop('href', 'javascript: toggle();')
+	  .prop('href', '#')
 	  .css({
 		display: 'block',
 		float: 'right',
@@ -236,7 +242,8 @@ function initializeUI()
 		borderRadius: '0.25em',
 		padding: '0.1em 0.25em',
 		marginBottom: '2px' })
-	  .insertAfter("h2"); /* Insert after movie title, so it'll settle near the table. */
+	  .insertAfter("h2") /* Insert after movie title, so it'll settle near the table. */
+	  .on("click", toggle);
 
 	/* Set up relative positioning for messages later on. */
 	$("#embed-wrapper").css('position', 'relative');
@@ -244,7 +251,7 @@ function initializeUI()
 	/* Set up the messaging box. */
 	$("<a>")
 	  .prop('id', 'message-box')
-	  .prop('href', 'javascript: closeMessage();')
+	  .prop('href', '#')
 	  .css({
 		display: 'none',
 		width: '60%',
@@ -254,7 +261,8 @@ function initializeUI()
 		left: '20%', /* The center, 50%, minus half the width. */
 		backgroundColor: '#fafafa',
 		borderRadius: '4px' })
-	  .appendTo("#embed-wrapper");
+	  .appendTo("#embed-wrapper")
+	  .on("click", closeMessage);
 }
 
 /* From the MDN documentation. Thanks! */
