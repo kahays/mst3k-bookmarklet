@@ -31,6 +31,7 @@ function unstyleTheaterMode()
 {
 	$(window).off("resize");
 	$("#content").parent().add("#video-content, #content, #user-content, #tab_bar").removeClass("theater");
+	$("#user-content").width("auto");
 	$("#tlkio").height('1000px'); /* Constant from source */
 	$("#sidebar").show();
 }
