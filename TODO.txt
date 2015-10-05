@@ -10,4 +10,3 @@ BUGS
 
 ENHANCEMENTS
 - Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
-- Remove header in theater mode?
