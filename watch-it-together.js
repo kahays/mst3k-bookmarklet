@@ -1,94 +1,6 @@
-/* Load YouTube API. */
-if (!window['YT'])
-{
-	$.getScript("https://www.youtube.com/iframe_api");
-}
-
-function onYouTubeIframeAPIReady()
-{
-	/* Make it easier to keep the message box on top. */
-	$(".link").wrapAll("<div id='embed-wrapper'/>");
-
-	/* Hack to get IE to fire the onReady from the YouTube API. */
-	$(".link")
-	  .each(function(index, container) {
-	  	if (container.style.display !== "block")
-		{
-			var frame = $(container).find("iframe");
-			frame
-			  .prop("oldHeight", frame.height())
-			  .height(0);
-			container.style.display = "block";
-		}
-	  });
-
-	/*
-	** We can attach the player API first, since we 1) only change the source of the
-	** frame, not the frame itself, so the player stays put, and 2) the player will
-	** automatically fire onReady if the frame changes to be API-capable.
-	*/
-	getVideoFrames()
-	  .each(initializeYouTubePlayer)
-	  .each(makeFrameAPICapable);
-}
-
-function makeFrameAPICapable(index, frame)
-{
-	var newSrc = frame.src;
-	if (newSrc.indexOf("enablejsapi=1") === -1)
-	{
-		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + "enablejsapi=1";
-	}
-	if (newSrc.indexOf("origin=") === -1)
-	{
-		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + "origin=" + window.location.origin;
-	}
-
-	/* Only reload if we have to. */
-	if (frame.src !== newSrc)
-	{
-		frame.src = newSrc;
-	}
-}
-
-function initializeYouTubePlayer(index, frame)
-{
-	if (!frame['player'])
-	{
-		frame.player = new YT.Player(frame, {
-			events: { onReady: jumpstart }
-		});
-	}
-}
-
-/* Hacky! We're trying to delay UI and playing video until everything's loaded. */
-function jumpstart()
-{
-	if (!this.completedLoads)
-	{
-		this.completedLoads = 1;
-	}
-	else
-	{
-		++this.completedLoads;
-		if (this.completedLoads === getVideoFrames().length)
-		{
-			/* Reverse IE hack since we've jumpstarted. */
-			$(".link")
-			  .each(function(index, container) {
-			  	if ($(container).find("iframe").height() === 0)
-				{
-					container.style.display = "none";
-					var frame = $(container).find("iframe");
-					frame.height(frame.prop("oldHeight"));
-				}
-			  });
-
-			initializeUI();
-			catchUp();
-		}
-	}
-}
+$("#watch-it-together").on("click", toggle);
+$("#message-box").on("click", closeMessage);
+catchUp();
 
 function localStart()
 {
@@ -198,18 +110,12 @@ function clearTimer()
 
 function makeControlButtonActive()
 {
-	$("#watch-it-together").css({
-		backgroundColor: '#ee0',
-		borderStyle: 'inset'
-	});
+	$("#watch-it-together").addClass("watch-it-together-active");
 }
 
 function makeControlButtonInactive()
 {
-	$("#watch-it-together").css({
-		backgroundColor: '#ffa',
-		borderStyle: 'outset'
-	});
+	$("#watch-it-together").removeClass("watch-it-together-active");
 }
 
 function showMessage(text)
@@ -223,46 +129,6 @@ function closeMessage()
 
 	/* Let's not follow the fake link. */
 	return false;
-}
-
-function initializeUI()
-{
-	/* Add control button. */
-	$("<a>Watch it together</a>")
-	  .prop('id', 'watch-it-together')
-	  .prop('href', '#')
-	  .css({
-		display: 'block',
-		float: 'right',
-		clear: 'both',
-		color: '#276a9a',
-		backgroundColor: '#ee0',
-		fontSize: '16px',
-		border: '2px inset #dd0',
-		borderRadius: '0.25em',
-		padding: '0.1em 0.25em',
-		marginBottom: '2px' })
-	  .insertAfter("h2") /* Insert after movie title, so it'll settle near the table. */
-	  .on("click", toggle);
-
-	/* Set up relative positioning for messages later on. */
-	$("#embed-wrapper").css('position', 'relative');
-
-	/* Set up the messaging box. */
-	$("<a>")
-	  .prop('id', 'message-box')
-	  .prop('href', '#')
-	  .css({
-		display: 'none',
-		width: '60%',
-		padding: '0.5em',
-		position: 'absolute',
-		top: '25%',
-		left: '20%', /* The center, 50%, minus half the width. */
-		backgroundColor: '#fafafa',
-		borderRadius: '4px' })
-	  .appendTo("#embed-wrapper")
-	  .on("click", closeMessage);
 }
 
 /* From the MDN documentation. Thanks! */

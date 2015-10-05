@@ -1,7 +1,7 @@
 BUGS
 - Fix IE message overlay.
-- Give IDs and permanent places to UI buttons.
-- Collect CSS into actual classes.
+- Give permanent places to UI buttons.
+- Fix synchronous/asynchonous loading in the current shim.
 - Only works with YouTube embeds.
 - Add support for Vimeo API.
 - Add support for Metacafe.
