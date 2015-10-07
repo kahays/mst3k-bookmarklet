@@ -77,8 +77,8 @@ function catchUp()
 		closeMessage();
 		makeControlButtonActive();
 
-		current.player.seekTo(Math.floor(elapsed/1000), true);
-		current.player.playVideo();
+		current.player.seekTo(Math.floor(elapsed/1000));
+		current.player.play();
 	}
 }
 

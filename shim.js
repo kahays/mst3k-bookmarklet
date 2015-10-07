@@ -1,112 +1,205 @@
-/* Load the custom MST3K stylesheet. */
-var style = document.createElement("link");
-style.href = "http://localhost/~kate/style.css";
-style.rel = "stylesheet";
-style.type = "text/css";
-document.head.appendChild(style);
+/*
+** Metacafe $(".link embed")
+** YouTube, Vimeo, Dailymotion $(".link iframe")
+** TODO: unified player interface
+**	all we use of the APIs is getDuration(), seek() and play()
+*/
 
-/* Load YouTube API. */
-if (!window['YT'])
-{
-	$.getScript("https://www.youtube.com/iframe_api");
-}
+/* Discover which APIs to load. */
+var necessaryAPIs =	$(".link > p > *")
+			  .toArray()
+			  .map(videoSite)
+			  .filter(unique)
+			  /* Metacafe has no API for now. */
+			  .filter(function(s){ return s != "metacafe"; });
+console.log(necessaryAPIs);
 
-function onYouTubeIframeAPIReady()
+/* Set up callback to attach APIs once the APIs are loaded. */
+var waitForAPIs = onYouTubeIframeAPIReady = dmAsyncInit = jumpstarter(necessaryAPIs.length, attachAPIs);
+
+/* Set up callback to initialize UI and content once the APIs are attached. */
+var waitForAttachedAPIs = jumpstarter(getVideoFrames().length, initialize);
+
+/* Kick it off: load APIs. */
+necessaryAPIs.forEach(loadAPI);
+
+function loadAPI(site)
 {
-	/* Hack to get IE to fire the onReady from the YouTube API. */
-	$(".link")
-	  .each(function(index, container) {
-	  	if (container.style.display !== "block")
+	if (site === "youtube")
+	{
+		if (!window['YT'])
 		{
-			var frame = $(container).find("iframe");
-			frame
-			  .prop("oldHeight", frame.height())
-			  .height(0);
-			container.style.display = "block";
+			$.getScript("https://www.youtube.com/iframe_api");
 		}
-	  });
-
-	/*
-	** We can attach the player API first, since we 1) only change the source of the
-	** frame, not the frame itself, so the player stays put, and 2) the player will
-	** automatically fire onReady if the frame changes to be API-capable.
-	*/
-	getVideoFrames()
-	  .each(initializeYouTubePlayer)
-	  .each(makeFrameAPICapable);
-}
-
-function makeFrameAPICapable(index, frame)
-{
-	var newSrc = frame.src;
-	if (newSrc.indexOf("enablejsapi=1") === -1)
-	{
-		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + "enablejsapi=1";
+		else
+		{
+			waitForAPIs();
+		}
 	}
-	if (newSrc.indexOf("origin=") === -1)
+	else if (site === "vimeo")
 	{
-		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + "origin=" + window.location.origin;
+		if (!window['Froogaloop'])
+		{
+			$.getScript("https://f.vimeocdn.com/js/froogaloop2.min.js");
+		}
+		/* Worry about race conditions later. */
+		waitForAPIs();
 	}
-
-	/* Only reload if we have to. */
-	if (frame.src !== newSrc)
+	else if (site === "dailymotion")
 	{
-		frame.src = newSrc;
+		if (!window['DM'])
+		{
+			$.getScript("http://api.dmcdn.net/all.js");
+		}
+		else
+		{
+			waitForAPIs();
+		}
 	}
 }
 
-function initializeYouTubePlayer(index, frame)
+function attachAPIs()
 {
-	if (!frame['player'])
+	// For each video frame
+	for (var i = 0, videos = $(".link > p > *"); i < videos.length; ++i)
 	{
-		frame.player = new YT.Player(frame, {
-			events: { onReady: jumpstart }
+		var site = videoSite(videos[i]);
+
+		/* Skip Metacafe videos until we can find an API. */
+		if (site === "metacafe")
+		{
+			waitForAttachedAPIs();
+			continue;
+		}
+
+		// reload video with API support
+		makeVideoAPICapable(videos[i], site);
+
+		// attach API via player
+		attachPlayer(videos[i], site);
+	}
+}
+
+function attachPlayer(video, site)
+{
+	if (video.player)
+	{
+		return;
+	}
+
+	if (site === "youtube")
+	{
+		video.player = new YT.Player(video, {
+			events: {
+				onReady: function(event) {
+					var player = event.target;
+					player.play = player.playVideo;
+					waitForAttachedAPIs();
+				}
+			}
+		});
+	}
+	else if (site === "vimeo")
+	{
+		video.player = Froogaloop(video);
+		video.player.addEvent("ready", waitForAttachedAPIs);
+	}
+	else if (site === "dailymotion")
+	{
+		/* Ad-hoc. */
+		var id = video.src.replace(/.*\//, "");
+
+		/* No assignment needed, because the whole player is dropped in where the element is. */
+		DM.player(video, {
+			width: 640,
+			height: 480,
+			video: id,
+			events: {
+				apiready: function(event) {
+					var frame = event.target;
+					frame.player = frame;
+					frame.player.seekTo = frame.seek;
+					frame.player.getDuration = function(){ return frame.duration; };
+					waitForAttachedAPIs();
+				}
+			}
 		});
 	}
 }
 
-/* Hacky! We're trying to delay UI and playing video until everything's loaded. */
-function jumpstart()
+function makeVideoAPICapable(video, site)
 {
-	if (!this.completedLoads)
+	var apiString = "", originString = "";
+
+	switch(site)
 	{
-		this.completedLoads = 1;
+		case "youtube":		apiString = "enablejsapi=1";
+					originString = "origin=" + window.location.origin;
+					break;
+		case "vimeo":		apiString = "api=1";
+					originString = "";
+					break;
+		/*
+		case "dailymotion":	apiString = "api=postmessage";
+					originString = "origin=" + window.location.origin;
+					break;
+		*/
+	}
+
+	var newSrc = video.src;
+	if (newSrc.indexOf(apiString) === -1)
+	{
+		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + apiString;
+	}
+	if (newSrc.indexOf(originString) === -1)
+	{
+		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + originString;
+	}
+
+	/* Only reload if we have to. */
+	if (video.src !== newSrc)
+	{
+		video.src = newSrc;
+	}
+}
+
+function videoSite(element)
+{
+	var url = element.src;
+	if (/^https?:\/\/www.youtube.com/.test(url))
+	{
+		return "youtube";
+	}
+	else if (/^https?:\/\/player.vimeo.com/.test(url))
+	{
+		return "vimeo";
+	}
+	else if (/^https?:\/\/www.dailymotion.com/.test(url))
+	{
+		return "dailymotion";
+	}
+	else if (/^https?:\/\/www.metacafe.com/.test(url))
+	{
+		return "metacafe";
 	}
 	else
 	{
-		++this.completedLoads;
-		if (this.completedLoads === getVideoFrames().length)
-		{
-			/* Reverse IE hack since we've jumpstarted. */
-			$(".link")
-			  .each(function(index, container) {
-			  	if ($(container).find("iframe").height() === 0)
-				{
-					container.style.display = "none";
-					var frame = $(container).find("iframe");
-					frame.height(frame.prop("oldHeight"));
-				}
-			  });
-
-			initializeUI();
-			$.getScript("http://localhost/~kate/theater-mode.js");
-			$.getScript("http://localhost/~kate/watch-it-together.js");
-		}
+		return "unknown";
 	}
 }
 
-function getVideoFrames()
-{
-	return $(".link iframe");
-}
+// Set up UI
+// Load and execute theater mode and watch-it-together code
 
-function getCurrentVideoFrame()
+function initialize()
 {
-	return $(".link:visible iframe")[0];
-}
+	/* Load the custom MST3K stylesheet. */
+	var style = document.createElement("link");
+	style.href = "http://localhost/~kate/style.css";
+	style.rel = "stylesheet";
+	style.type = "text/css";
+	document.head.appendChild(style);
 
-function initializeUI()
-{
 	if (!$("#user-content").size())
 	{
 		/* Collect the various sections into groupings. */
@@ -140,4 +233,33 @@ function initializeUI()
 		  .prop('href', '#')
 		  .appendTo("#embed-wrapper");
 	}
+
+	/* Load other scripts. */
+	$.getScript("http://localhost/~kate/theater-mode.js");
+	$.getScript("http://localhost/~kate/watch-it-together.js");
+}
+
+/* UTILITY FUNCTIONS */
+
+function getVideoFrames()
+{
+	return $(".link iframe");
+}
+
+function jumpstarter(totalCount, callback)
+{
+	return function() {
+		this.count = (this.count ? this.count + 1 : 1);
+
+		if (this.count === totalCount)
+		{
+			callback();
+		}
+	};
+}
+
+/* From http://stackoverflow.com/questions/1960473/unique-values-in-an-array . Thanks!*/
+function unique(value, index, self)
+{
+	return self.indexOf(value) === index;
 }
