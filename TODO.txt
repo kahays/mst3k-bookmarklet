@@ -1,4 +1,5 @@
 BUGS
+- Fix DST bug.
 - Fix IE message overlay.
 - Give permanent places to UI buttons.
 - Fix synchronous/asynchonous loading in the current shim.

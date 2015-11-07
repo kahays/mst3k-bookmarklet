@@ -4,7 +4,12 @@ catchUp();
 
 function localStart()
 {
-	var centralTimeOffset = 420;
+	/*
+	** BUG: this offset actually changes due to DST. A more robust solution would
+	** involve bringing in a whole library, so we'll hack it for the moment.
+	*/
+	var DST = false;
+	var centralTimeOffset = (DST ? 420 : 480);
 	var localStart = new Date();
 	localStart.setHours(21, localStart.getTimezoneOffset() - centralTimeOffset, 0, 0);
 	return localStart;
