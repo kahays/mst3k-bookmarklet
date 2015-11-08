@@ -1,13 +1,18 @@
 BUGS
 - Fix DST bug.
 - Fix IE message overlay.
-- Give permanent places to UI buttons.
-- Fix synchronous/asynchonous loading in the current shim.
-- Only works with YouTube embeds.
-- Add support for Vimeo API.
-- Add support for Metacafe.
-- Add support for DailyMotion.
+- Show warning message for Metacafe embeds (no API support.)
 - Don't pollute the global namespace.
+
+- Improve API support for YouTube, Vimeo and Dailymotion embeds.
+- Add API support for Metacafe.
+
+- Ensure support for Chrome, Safari, Firefox and IE.
 
 ENHANCEMENTS
 - Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
+
+NOTES
+http://www.club-mst3k.com/212-godzilla-vs-megalon // Dailymotion and YouTube embeds
+http://www.club-mst3k.com/213-godzilla-vs-the-sea-monster // Metacafe, YouTube and Dailymotion embeds.
+http://www.club-mst3k.com/615-kitten-with-a-whip // Vimeo embed.

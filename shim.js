@@ -15,10 +15,10 @@ var necessaryAPIs =	$(".link > p > *")
 console.log(necessaryAPIs);
 
 /* Set up callback to attach APIs once the APIs are loaded. */
-var waitForAPIs = onYouTubeIframeAPIReady = dmAsyncInit = jumpstarter(necessaryAPIs.length, attachAPIs);
+var waitForAPIs = onYouTubeIframeAPIReady = dmAsyncInit = jumpstarter(attachAPIs, necessaryAPIs.length);
 
 /* Set up callback to initialize UI and content once the APIs are attached. */
-var waitForAttachedAPIs = jumpstarter(getVideoFrames().length, initialize);
+var waitForAttachedAPIs = jumpstarter(initialize, getVideoFrames().length);
 
 /* Kick it off: load APIs. */
 necessaryAPIs.forEach(loadAPI);
@@ -38,12 +38,24 @@ function loadAPI(site)
 	}
 	else if (site === "vimeo")
 	{
+		/*
+		** Froogaloop provides no callback for when it's finished loading, so we hack it
+		** by fetching the script only once but calling our load function repeatedly until
+		** Froogaloop is seen to exist.
+		*/
 		if (!window['Froogaloop'])
 		{
-			$.getScript("https://f.vimeocdn.com/js/froogaloop2.min.js");
+			if (!loadAPI['FroogaloopLoading'])
+			{
+				$.getScript("https://f.vimeocdn.com/js/froogaloop2.min.js");
+				loadAPI['FroogaloopLoading'] = true;
+			}
+			setTimeout(loadAPI, 50, "vimeo");
 		}
-		/* Worry about race conditions later. */
-		waitForAPIs();
+		else
+		{
+			waitForAPIs();
+		}
 	}
 	else if (site === "dailymotion")
 	{
@@ -102,7 +114,12 @@ function attachPlayer(video, site)
 	else if (site === "vimeo")
 	{
 		video.player = Froogaloop(video);
-		video.player.addEvent("ready", waitForAttachedAPIs);
+		video.player.addEvent("ready", function() {
+			video.player.getDuration = function() { video.player.api("getDuration", function(duration){ return duration; }); }
+			video.player.seekTo = function(time){ video.player.api("seekTo", time); };
+			video.player.play = function(){ video.player.api("play"); };
+			waitForAttachedAPIs();
+		});
 	}
 	else if (site === "dailymotion")
 	{
@@ -146,20 +163,22 @@ function makeVideoAPICapable(video, site)
 		*/
 	}
 
-	var newSrc = video.src;
-	if (newSrc.indexOf(apiString) === -1)
-	{
-		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + apiString;
-	}
-	if (newSrc.indexOf(originString) === -1)
-	{
-		newSrc += (newSrc.indexOf("?") === -1 ? "?" : "&" ) + originString;
-	}
+	var newSrc = appendToURI(video.src, apiString);
+	newSrc = appendToURI(newSrc, originString);
 
 	/* Only reload if we have to. */
 	if (video.src !== newSrc)
 	{
 		video.src = newSrc;
+	}
+
+	function appendToURI(uri, string)
+	{
+		if (uri.indexOf(string) === -1)
+		{
+			uri += (uri.indexOf("?") === -1 ? "?" : "&") + string;
+		}
+		return uri;
 	}
 }
 
@@ -246,12 +265,12 @@ function getVideoFrames()
 	return $(".link iframe");
 }
 
-function jumpstarter(totalCount, callback)
+function jumpstarter(callback, countTo)
 {
 	return function() {
 		this.count = (this.count ? this.count + 1 : 1);
 
-		if (this.count === totalCount)
+		if (this.count === countTo)
 		{
 			callback();
 		}
