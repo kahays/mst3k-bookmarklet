@@ -267,14 +267,17 @@ function getVideoFrames()
 
 function jumpstarter(callback, countTo)
 {
-	return function() {
-		this.count = (this.count ? this.count + 1 : 1);
-
-		if (this.count === countTo)
-		{
-			callback();
-		}
-	};
+	/* Using a closure to emulate a static variable. */
+	return (function(){
+		var counter = 0;
+		return function(){
+			++counter;
+			if (counter === countTo)
+			{
+				callback();
+			}
+		};
+	})();
 }
 
 /* From http://stackoverflow.com/questions/1960473/unique-values-in-an-array . Thanks!*/
