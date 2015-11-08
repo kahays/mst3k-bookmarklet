@@ -17,12 +17,12 @@ function localStart()
 
 function getVideoFrames()
 {
-	return $(".link iframe");
+	return $(".link iframe, .link embed");
 }
 
 function getCurrentVideoFrame()
 {
-	return $(".link:visible iframe")[0];
+	return getVideoFrames().filter(":visible")[0];
 }
 
 function catchUp()

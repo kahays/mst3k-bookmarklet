@@ -6,7 +6,7 @@
 */
 
 /* Discover which APIs to load. */
-var necessaryAPIs =	$(".link > p > *")
+var necessaryAPIs =	getVideoFrames()
 			  .toArray()
 			  .map(videoSite)
 			  .filter(unique)
@@ -73,7 +73,7 @@ function loadAPI(site)
 function attachAPIs()
 {
 	// For each video frame
-	for (var i = 0, videos = $(".link > p > *"); i < videos.length; ++i)
+	for (var i = 0, videos = getVideoFrames(); i < videos.length; ++i)
 	{
 		var site = videoSite(videos[i]);
 
@@ -262,7 +262,7 @@ function initialize()
 
 function getVideoFrames()
 {
-	return $(".link iframe");
+	return $(".link iframe, .link embed");
 }
 
 function jumpstarter(callback, countTo)
