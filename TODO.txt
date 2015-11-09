@@ -1,6 +1,7 @@
 BUGS
 - Fix DST bug.
 - Fix IE message overlay.
+- Hulu embeds (via Dailymotion) don't support the Dailymotion API?
 - Show warning message for Metacafe embeds (no API support.)
 - Don't pollute the global namespace.
 
@@ -13,6 +14,6 @@ ENHANCEMENTS
 - Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
 
 NOTES
-http://www.club-mst3k.com/212-godzilla-vs-megalon // Dailymotion and YouTube embeds
-http://www.club-mst3k.com/213-godzilla-vs-the-sea-monster // Metacafe, YouTube and Dailymotion embeds.
+http://www.club-mst3k.com/212-godzilla-vs-megalon // Dailymotion and YouTube embeds. IN CHROME, THIS WILL CRASH IF THE DEBUGGER IS OPEN.
+http://www.club-mst3k.com/213-godzilla-vs-the-sea-monster // Metacafe, YouTube and Dailymotion embeds. THE DAILYMOTION EMBED IS SOMEHOW FROM HULU AND DOESN'T PLAY NICE.
 http://www.club-mst3k.com/615-kitten-with-a-whip // Vimeo embed.
