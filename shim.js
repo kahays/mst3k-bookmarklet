@@ -131,6 +131,10 @@ function attachPlayer(video, site)
 			width: 640,
 			height: 480,
 			video: id,
+			params: {
+				api: 1,
+				autoplay: 0
+			},
 			events: {
 				apiready: function(event) {
 					var frame = event.target;
