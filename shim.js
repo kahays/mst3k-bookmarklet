@@ -258,6 +258,7 @@ function initialize()
 	}
 
 	/* Load other scripts. */
+	$.getScript("http://localhost/~kate/add-chat.js");
 	$.getScript("http://localhost/~kate/theater-mode.js");
 	$.getScript("http://localhost/~kate/watch-it-together.js");
 }
