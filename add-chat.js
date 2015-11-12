@@ -23,12 +23,16 @@ if (!$("#tlkio").length) {
 
 	/*
 	** Hack! Tlk.io's embed only expects to fire on page load. We assume it's already
-	** loaded, so we use a highly nonstandard hack to fire just that event listener.
-	** The long-term solution is to get them to use document.readyState to determine
-	** if a page is already loaded.
+	** loaded, so we re-fire the load event. The long-term solution is to get them to
+	** use document.readyState to determine if a page is already loaded.
 	*/
+	$.getScript("http://tlk.io/embed.js", function(){
+		window.dispatchEvent(new Event('load'));
+	});
+
+	/* This hack would allow us to fire just that event listener, but no dice outside the console.
 	var totalUnrelatedEventListeners = getEventListeners(window).load.length;
-	$.getScript("http://tlk.io/embed.js");
+	// $.getScript would go here
 	(function fireWhenReady() {
 		var listeners = getEventListeners(window).load;
 		if (listeners.length === totalUnrelatedEventListeners) {
@@ -38,4 +42,5 @@ if (!$("#tlkio").length) {
 			(listeners[listeners.length-1].listener)();
 		}
 	})();
+	*/
 }
