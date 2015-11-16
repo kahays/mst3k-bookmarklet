@@ -1,14 +1,14 @@
 BUGS
 - Fix DST bug.
 - Fix IE message overlay.
-- Hulu embeds (via Dailymotion) don't support the Dailymotion API?
-- Show warning message for Metacafe embeds (no API support.)
+- Ensure support for Chrome, Safari, Firefox and IE.
 - Don't pollute the global namespace.
+
+- Show warning message for embeds with no API support (MetaCafe, Hulu via Dailymotion.)
+- Hulu embeds (via Dailymotion) don't support the Dailymotion API?
 
 - Improve API support for YouTube, Vimeo and Dailymotion embeds.
 - Add API support for Metacafe.
-
-- Ensure support for Chrome, Safari, Firefox and IE.
 
 ENHANCEMENTS
 - Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
