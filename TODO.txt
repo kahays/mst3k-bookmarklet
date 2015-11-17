@@ -1,4 +1,5 @@
 BUGS
+- Fix race condition where catchUp() fires before the YouTube frame is ready.
 - Fix DST bug.
 - Fix IE message overlay.
 - Ensure support for Chrome, Safari, Firefox and IE.
