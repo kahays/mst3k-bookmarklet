@@ -4,14 +4,46 @@ catchUp();
 
 function localStart()
 {
-	/*
-	** BUG: this offset actually changes due to DST. A more robust solution would
-	** involve bringing in a whole library, so we'll hack it for the moment.
-	*/
-	var DST = false;
-	var centralTimeOffset = (DST ? 420 : 480);
 	var localStart = new Date();
-	localStart.setHours(21, localStart.getTimezoneOffset() - centralTimeOffset, 0, 0);
+
+	/*
+	** This definitely has bugs! Right now it's a decent approximation to the right
+	** solution, which would be actually bringing in a good time library.
+
+	** Daylight Saving Time changes at 2AM local time, starting on the second Sunday
+	** in March and ending on the first Sunday in November. We find the beginning
+	** and ending of DST (in Central Time) according to UTC and compare with the
+	** current UTC time to determine if Central Time is observing DST.
+	*/
+
+	/* DST would start at 8AM UTC. */
+	var DSTStart = new Date(Date.UTC(localStart.getUTCFullYear(), /* March */ 2, 1, 8));
+	/* Move to first Sunday in March... */
+	if (DSTStart.getUTCDay() !== 0)
+	{
+		DSTStart.setUTCDate( DSTStart.getUTCDate() + 7 - DSTStart.getUTCDay() );
+	}
+	/* ... but DST starts on the second Sunday in March. */
+	DSTStart.setUTCDate( DSTStart.getUTCDay() + 7 );
+
+	/* DST would end at 7AM UTC. */
+	var DSTEnd = new Date(Date.UTC(localStart.getUTCFullYear(), /* November */ 10, 1, 7));
+	/* Move to first Sunday in November. */
+	if (DSTEnd.getUTCDay() !== 0)
+	{
+		DSTEnd.setUTCDate( DSTEnd.getUTCDate() + 7 - DSTEnd.getUTCDay() );
+	}
+
+	/* Central Standard Time is UTC-6 when DST is not in effect. */
+	var centralTimeOffset = 6 * 60;
+	if (DSTStart.getTime() < localStart.getTime() && localStart.getTime() < DSTEnd.getTime())
+	{
+		/* Central DST is UTC-5. */
+		centralTimeOffset -= 60;
+	}
+
+	/* Start time is given as 9PM Central. */
+	localStart.setHours(21, -(localStart.getTimezoneOffset() - centralTimeOffset), 0, 0);
 	return localStart;
 }
 
