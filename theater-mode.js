@@ -24,12 +24,12 @@ function styleTheaterMode()
 	}
 
 	dynamicStyling();
-	$(window).resize(dynamicStyling);
+	$(window).on("resize.mst3k", dynamicStyling);
 }
 
 function unstyleTheaterMode()
 {
-	$(window).off("resize");
+	$(window).off("resize.mst3k");
 	$("#content").parent().add("#video-content, #content, #user-content, #tab_bar").removeClass("theater");
 	$("#user-content").width("auto");
 	$("#tlkio").height('1000px'); /* Constant from source */
