@@ -12,6 +12,8 @@ BUGS
 
 ENHANCEMENTS
 - Add time selector to watch it together (like "Watch it together @ 9PM CT" or so.)
+- Have a way to reset the time selected for WIT.
+- Add a way for timers to span days; right now you can't set a timer to go off at midnight.
 
 NOTES
 http://www.club-mst3k.com/212-godzilla-vs-megalon // Dailymotion and YouTube embeds. IN CHROME, THIS WILL CRASH IF THE DEBUGGER IS OPEN.
