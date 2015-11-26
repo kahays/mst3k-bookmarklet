@@ -7,8 +7,11 @@ timeSelector.setTime(localStart());
 $(timeSelector.DOMElement)
   .find("select")
   .on("change", function() {
+	if (window.MST3KTimeoutID)
+	{
+		closeMessage();
+	}
   	clearTimer();
-  	closeMessage();
   	makeControlButtonInactive();
   })
   .end()
