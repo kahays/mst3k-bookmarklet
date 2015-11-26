@@ -8,17 +8,25 @@
 	display: block;
 	float: right;
 	clear: both;
-	color: #276a9a;
 	font-size: 16px;
+	margin-bottom: 2px;
+}
+
+#watch-it-together a {
+	color: #276a9a;
 	border-width: 2px;
 	border-color: #dd0;
 	border-radius: 0.25em;
 	padding: 0.1em 0.25em;
-	margin-bottom: 2px;
 
 	/* Default style is inactive. See the dynamic section below. */
 	background-color: #ffa;
 	border-style: outset;
+}
+
+#watch-it-together select {
+	margin: 0 0 3px 0;
+	width: 4em;
 }
 
 #message-box {
@@ -47,7 +55,7 @@
 /* DYNAMIC (WATCH IT TOGETHER) */
 /* We're not counting hiding or showing the message box here. */
 
-#watch-it-together.watch-it-together-active {
+#watch-it-together .watch-it-together-active {
 	background-color: #ee0;
 	border-style: inset;
 }

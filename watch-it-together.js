@@ -1,5 +1,19 @@
-$("#watch-it-together").on("click", toggle);
+controlButton().on("click", toggle);
 $("#message-box").on("click", closeMessage);
+
+/* Set up a time selector. */
+var timeSelector = new TimeSelector();
+timeSelector.setTime(localStart());
+$(timeSelector.DOMElement)
+  .find("select")
+  .on("change", function() {
+  	clearTimer();
+  	closeMessage();
+  	makeControlButtonInactive();
+  })
+  .end()
+  .appendTo("#watch-it-together");
+
 catchUp();
 
 function localStart()
@@ -47,6 +61,10 @@ function localStart()
 	return localStart;
 }
 
+function selectorStart()
+{
+}
+
 function getVideoFrames()
 {
 	return $(".link iframe, .link embed");
@@ -59,7 +77,7 @@ function getCurrentVideoFrame()
 
 function catchUp()
 {
-	var elapsed = Date.now() - localStart().getTime();
+	var elapsed = Date.now() - timeSelector.toDateObject().getTime();
 	var current = getCurrentVideoFrame();
 	if (elapsed < 0)
 	{
@@ -69,11 +87,11 @@ function catchUp()
 			var message = "This video will automatically start playing at ";
 			if (toLocaleTimeStringSupportsLocales())
 			{
-				message += localStart().toLocaleTimeString({}, { hour: "numeric", minute: "numeric" });
+				message += timeSelector.toDateObject().toLocaleTimeString({}, { hour: "numeric", minute: "numeric" });
 			}
 			else
 			{
-				var start = localStart();
+				var start = timeSelector.toDateObject();
 				var afternoon = (start.getHours() >= 12);
 
 				/* Convert from 24-hour time. */
@@ -145,14 +163,19 @@ function clearTimer()
 	}
 }
 
+function controlButton()
+{
+	return $("#watch-it-together a");
+}
+
 function makeControlButtonActive()
 {
-	$("#watch-it-together").addClass("watch-it-together-active");
+	controlButton().addClass("watch-it-together-active");
 }
 
 function makeControlButtonInactive()
 {
-	$("#watch-it-together").removeClass("watch-it-together-active");
+	controlButton().removeClass("watch-it-together-active");
 }
 
 function showMessage(text)

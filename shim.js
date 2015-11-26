@@ -245,9 +245,9 @@ function initialize()
 		$("#embed-wrapper").css('position', 'relative');
 
 		/* Add control button. */
-		$("<a>Watch it together</a>")
+		$("<div>")
 		  .prop('id', 'watch-it-together')
-		  .prop('href', '#')
+		  .append("<a href='#'>Watch it together</a> @ ")
 		  .insertAfter("h2"); /* Insert after movie title, so it'll settle near the table. */
 
 		/* Set up the messaging box. */
@@ -258,6 +258,8 @@ function initialize()
 	}
 
 	/* Load other scripts. */
+	/* Race condition with this first script, it's just for testing though. */
+	$.getScript("http://localhost/~kate/time-select-shim.js");
 	$.getScript("http://localhost/~kate/add-chat.js");
 	$.getScript("http://localhost/~kate/theater-mode.js");
 	$.getScript("http://localhost/~kate/watch-it-together.js");
