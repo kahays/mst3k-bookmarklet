@@ -40,9 +40,7 @@ function TimeSelector()
 TimeSelector.prototype.toDateObject = function()
 {
 	var time = new Date();
-	time.setHours(this.getHour());
-	time.setMinutes(this.getMinute());
-	time.setSeconds(0, 0);
+	time.setHours(this.getHour(), this.getMinute(), 0, 0);
 	return time;
 }
 TimeSelector.prototype.getHour = function()
