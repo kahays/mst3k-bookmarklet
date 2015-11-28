@@ -35,13 +35,11 @@ function localStart()
 
 	/* DST would start at 8AM UTC. */
 	var DSTStart = new Date(Date.UTC(localStart.getUTCFullYear(), /* March */ 2, 1, 8));
-	/* Move to first Sunday in March... */
+	/* Move to second Sunday in March. */
 	if (DSTStart.getUTCDay() !== 0)
 	{
-		DSTStart.setUTCDate( DSTStart.getUTCDate() + 7 - DSTStart.getUTCDay() );
+		DSTStart.setUTCDate( DSTStart.getUTCDate() + 14 - DSTStart.getUTCDay() );
 	}
-	/* ... but DST starts on the second Sunday in March. */
-	DSTStart.setUTCDate( DSTStart.getUTCDay() + 7 );
 
 	/* DST would end at 7AM UTC. */
 	var DSTEnd = new Date(Date.UTC(localStart.getUTCFullYear(), /* November */ 10, 1, 7));
