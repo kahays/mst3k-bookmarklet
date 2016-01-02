@@ -259,7 +259,7 @@ function initialize()
 
 	/* Load other scripts. */
 	/* Race condition with this first script, it's just for testing though. */
-	$.getScript("http://localhost/~kate/time-select-shim.js");
+	$.getScript("http://localhost/~kate/rolling-time-select-shim.js");
 	$.getScript("http://localhost/~kate/add-chat.js");
 	$.getScript("http://localhost/~kate/theater-mode.js");
 	$.getScript("http://localhost/~kate/watch-it-together.js");

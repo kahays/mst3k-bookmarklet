@@ -1,8 +1,8 @@
 controlButton().on("click", toggle);
 $("#message-box").on("click", closeMessage);
 
-/* Set up a time selector. */
-var timeSelector = new TimeSelector();
+/* Set up a time selector to allow several hours for a person to "catch up." */
+var timeSelector = new RollingTimeSelector(new Date( Date.now() - 3*60*60*1000 ));
 timeSelector.setTime(localStart());
 $(timeSelector.DOMElement)
   .find("select")
@@ -60,10 +60,6 @@ function localStart()
 	/* Start time is given as 9PM Central. */
 	localStart.setHours(21, -(localStart.getTimezoneOffset() - centralTimeOffset), 0, 0);
 	return localStart;
-}
-
-function selectorStart()
-{
 }
 
 function getVideoFrames()

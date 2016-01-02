@@ -1,6 +1,12 @@
-function TimeSelector()
+function RollingTimeSelector(referenceTime)
 {
-	this.hourSelect = makeSelect( [12].concat(range(1, 12)) );
+	referenceTime.setMinutes(0, 0, 0);
+
+	var hours = range(0, 12);
+	hours[0] = 12;
+	var startingIndex = referenceTime.getHours() % 12;
+	hours = hours.slice(startingIndex).concat(hours.slice(0, startingIndex));
+	this.hourSelect = makeSelect( hours );
 	this.minuteSelect = makeSelect( range(0, 60, 5).map(function(x) { return (x < 10 ? '0' + x : x); }) );
 	this.meridianSelect = makeSelect( ["AM", "PM"] );
 
@@ -11,6 +17,7 @@ function TimeSelector()
 	DOMElement.appendChild(this.meridianSelect);
 
 	this.DOMElement = DOMElement;
+	this.referenceTime = referenceTime;
 
 	function makeSelect(options)
 	{
@@ -37,36 +44,45 @@ function TimeSelector()
 	}
 }
 
-TimeSelector.prototype.toDateObject = function()
+RollingTimeSelector.prototype.toDateObject = function()
 {
-	var time = new Date();
-	time.setHours(this.getHour(), this.getMinute(), 0, 0);
+	var time = new Date(this.referenceTime);
+	time.setHours(
+		this.referenceTime.getHours() + this.hourSelect.selectedIndex,
+		this.minuteSelect.selectedOptions[0].value,
+		0,
+		0);
+	var currentMeridian = (time.getHours() < 12 ? "AM" : "PM");
+	if (currentMeridian !== this.getMeridian())
+	{
+		time.setHours(time.getHours() + 12);
+	}
 	return time;
 }
-TimeSelector.prototype.getHour = function()
+RollingTimeSelector.prototype.getHour = function()
 {
 	return (parseInt(this.hourSelect.selectedOptions[0].value, 10) % 12) + (this.getMeridian() === "PM" ? 12 : 0);
 }
-TimeSelector.prototype.getMinute = function()
+RollingTimeSelector.prototype.getMinute = function()
 {
 	return parseInt(this.minuteSelect.selectedOptions[0].value, 10);
 }
-TimeSelector.prototype.getMeridian = function()
+RollingTimeSelector.prototype.getMeridian = function()
 {
 	return this.meridianSelect.selectedOptions[0].value;
 }
 
-TimeSelector.prototype.setTime = function(time)
+RollingTimeSelector.prototype.setTime = function(time)
 {
 	this.setHour(time.getHours());
 	this.setMinute(time.getMinutes());
 }
-TimeSelector.prototype.setHour = function(hour)
+RollingTimeSelector.prototype.setHour = function(hour)
 {
 	this.setMeridian( (hour % 24 < 12 ? "AM" : "PM") );
-	return this.hourSelect.options[ (hour % 12) ].selected = true;
+	return this.hourSelect.options[ ((hour - (+this.hourSelect.options[0].value) + 12) % 12) ].selected = true;
 }
-TimeSelector.prototype.setMinute = function(minute)
+RollingTimeSelector.prototype.setMinute = function(minute)
 {
 	/* Pick the first minute option that is equal to, or later than, the given minute. */
 	for (var i = 0; i < this.minuteSelect.options.length && parseInt(this.minuteSelect.options[i].value, 10) < minute; ++i) {}
@@ -78,7 +94,7 @@ TimeSelector.prototype.setMinute = function(minute)
 	}
 	return this.minuteSelect.options[i].selected = true;
 }
-TimeSelector.prototype.setMeridian = function(meridian)
+RollingTimeSelector.prototype.setMeridian = function(meridian)
 {
 	return this.meridianSelect.options[ (meridian === "AM" ? 0 : 1) ].selected = true;
 }
