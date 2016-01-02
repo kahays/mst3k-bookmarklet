@@ -74,7 +74,8 @@ function getCurrentVideoFrame()
 
 function catchUp()
 {
-	var elapsed = Date.now() - timeSelector.toDateObject().getTime();
+	var time = new Date();
+	var elapsed = time.getTime() - timeSelector.toDateObject().getTime();
 	var current = getCurrentVideoFrame();
 	if (elapsed < 0)
 	{
@@ -106,6 +107,13 @@ function catchUp()
 				}
 
 				message += hour + ":" + minutes + " " + (afternoon ? "PM" : "AM");
+			}
+			if (time.getDate() !== timeSelector.toDateObject().getDate())
+			{
+				var nextDay = timeSelector.toDateObject().getDate();
+				message += " on the " + nextDay;
+				/* Hack for suffixes. */
+				message += ["th", "st", "nd", "rd"][ ((11 <= nextDay && nextDay <= 13) || (nextDay % 10 > 3) ? 0 : nextDay % 10) ];
 			}
 			message += "! Click the \"Watch it together\" button to cancel, or click to clear this message.";
 
