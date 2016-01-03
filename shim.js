@@ -115,7 +115,7 @@ function attachPlayer(video, site)
 	{
 		video.player = Froogaloop(video);
 		video.player.addEvent("ready", function() {
-			video.player.getDuration = function() { video.player.api("getDuration", function(duration){ return duration; }); }
+			video.player.api("getDuration", function(duration){ video.player.getDuration = function(){ return duration; }; });
 			video.player.seekTo = function(time){ video.player.api("seekTo", time); };
 			video.player.play = function(){ video.player.api("play"); };
 			waitForAttachedAPIs();
