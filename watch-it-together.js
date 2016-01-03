@@ -120,6 +120,7 @@ function catchUp()
 			showMessage(message);
 		}
 		makeControlButtonActive();
+		clearTimer();
 
 		if (!window.MST3KTimeoutID)
 		{
@@ -133,9 +134,9 @@ function catchUp()
 	}
 	else
 	{
-		clearTimer();
 		closeMessage();
 		makeControlButtonActive();
+		clearTimer();
 
 		current.player.seekTo(Math.floor(elapsed/1000));
 		current.player.play();
