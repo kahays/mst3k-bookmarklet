@@ -18,8 +18,9 @@ $("table.link_bar .link_button:not(.dvd) a")
 	return false;
   });
 
-/* Set up a time selector to allow several hours for a person to "catch up." */
-var timeSelector = new RollingTimeSelector(new Date( Date.now() - 3*60*60*1000 ));
+/* Set up a time selector with the maximum appropriate time for a person to "catch up." */
+var longestMovie = Math.max.apply(undefined, getVideoFrames().map(function(){ return (this.player ? this.player.getDuration() : 0); }).toArray());
+var timeSelector = new RollingTimeSelector(new Date( Date.now() - longestMovie*1000 ));
 timeSelector.setTime(localStart());
 $(timeSelector.DOMElement)
   .find("select")
