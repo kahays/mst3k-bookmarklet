@@ -96,6 +96,7 @@ function attachPlayer(video, site)
 {
 	if (video.player)
 	{
+		waitForAttachedAPIs();
 		return;
 	}
 
@@ -145,6 +146,18 @@ function attachPlayer(video, site)
 				}
 			}
 		});
+
+		/*
+		** HACK: Dailymotion is also returning embedded Hulu videos, which don't interact
+		** at all with the API, including throwing errors. So we assume if nothing is
+		** attached within a longish period of time, the player is probably not supported.
+		*/
+		setTimeout(function(){
+			if (!video.player)
+			{
+				waitForAttachedAPIs();
+			}
+		}, 2000);
 	}
 }
 
