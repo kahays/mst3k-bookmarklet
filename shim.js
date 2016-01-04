@@ -127,24 +127,32 @@ function attachPlayer(video, site)
 		/* Ad-hoc. */
 		var id = video.src.replace(/.*\//, "");
 
-		/* No assignment needed, because the whole player is dropped in where the element is. */
-		DM.player(video, {
-			width: 640,
-			height: 480,
-			video: id,
-			params: {
-				api: 1,
-				autoplay: 0
-			},
-			events: {
-				apiready: function(event) {
-					var frame = event.target;
-					frame.player = frame;
-					frame.player.seekTo = frame.seek;
-					frame.player.getDuration = function(){ return frame.duration; };
-					waitForAttachedAPIs();
+		/* The duration is typically not loaded until the video is played, but we need it beforehand, and so use the data API. */
+		var preloadDuration = NaN;
+		DM.api('/video/' + id + '?fields=duration', function(response)
+		{
+			preloadDuration = response.duration;
+
+			/* No assignment needed, because the whole player is dropped in where the element is. */
+			DM.player(video, {
+				width: 640,
+				height: 480,
+				video: id,
+				params: {
+					api: 1,
+					autoplay: 0
+				},
+				events: {
+					apiready: function(event) {
+						var frame = event.target;
+						frame.player = frame;
+						frame.player.seekTo = frame.seek;
+						frame.player.duration = preloadDuration;
+						frame.player.getDuration = function(){ return frame.duration; };
+						waitForAttachedAPIs();
+					}
 				}
-			}
+			});
 		});
 
 		/*
