@@ -1,6 +1,23 @@
 controlButton().on("click", toggle);
 $("#message-box").on("click", closeMessage);
 
+/* Hack to show warning for videos that can't autoplay. This is based on the function from the (minified) application.js powering MST3K. */
+$("table.link_bar .link_button:not(.dvd) a")
+  .click(function(e){
+	var t = e.target.id || $(e.target).parent().attr("id");
+	/* If a video frame has no associated player, we can't autoplay with it. */
+	if(!$("#link_"+t).find("iframe, embed").prop('player'))
+	{
+		cannotAutoplay();
+	}
+	else if (window.MST3KAutoplayWarning)
+	{
+		window.MST3KAutoplayWarning = false;
+		closeMessage();
+	}
+	return false;
+  });
+
 /* Set up a time selector to allow several hours for a person to "catch up." */
 var timeSelector = new RollingTimeSelector(new Date( Date.now() - 3*60*60*1000 ));
 timeSelector.setTime(localStart());
@@ -17,7 +34,14 @@ $(timeSelector.DOMElement)
   .end()
   .appendTo("#watch-it-together");
 
-catchUp();
+if (getCurrentVideoFrame().player)
+{
+	catchUp();
+}
+else
+{
+	cannotAutoplay();
+}
 
 function localStart()
 {
@@ -145,7 +169,11 @@ function catchUp()
 
 function toggle()
 {
-	if (!window.MST3KTimeoutID)
+	if (!getCurrentVideoFrame().player)
+	{
+		cannotAutoplay();
+	}
+	else if (!window.MST3KTimeoutID)
 	{
 		catchUp();
 	}
@@ -158,6 +186,14 @@ function toggle()
 
 	/* Let's not follow the fake link. */
 	return false;
+}
+
+function cannotAutoplay()
+{
+	window.MST3KAutoplayWarning = true;
+	showMessage("This video can't be autoplayed. Sorry!");
+	clearTimer();
+	makeControlButtonInactive();
 }
 
 function clearTimer()
