@@ -129,7 +129,7 @@ function attachPlayer(video, site)
 
 		/* The duration is typically not loaded until the video is played, but we need it beforehand, and so use the data API. */
 		var preloadDuration = NaN;
-		DM.api('/video/' + id + '?fields=duration', function(response)
+		DM.api('/video/' + id + '?fields=duration,owner.screenname', function(response)
 		{
 			preloadDuration = response.duration;
 
@@ -153,19 +153,17 @@ function attachPlayer(video, site)
 					}
 				}
 			});
-		});
 
-		/*
-		** HACK: Dailymotion is also returning embedded Hulu videos, which don't interact
-		** at all with the API, including throwing errors. So we assume if nothing is
-		** attached within a rather long period of time, the player is probably not supported.
-		*/
-		setTimeout(function(){
-			if (!video.player)
+			/*
+			** HACK: Dailymotion is also returning embedded Hulu videos, which don't interact
+			** at all with the API, including throwing errors. However, we can guess that Hulu
+			** videos are uploaded by the official user "hulu".
+			*/
+			if (response['owner.screenname'] === 'hulu')
 			{
 				waitForAttachedAPIs();
 			}
-		}, 10000);
+		});
 	}
 }
 
