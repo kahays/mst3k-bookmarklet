@@ -2,8 +2,7 @@ function RollingTimeSelector(referenceTime)
 {
 	referenceTime.setMinutes(0, 0, 0);
 
-	var hours = range(0, 12);
-	hours[0] = 12;
+	var hours = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 	var startingIndex = referenceTime.getHours() % 12;
 	hours = hours.slice(startingIndex).concat(hours.slice(0, startingIndex));
 	this.hourSelect = makeSelect( hours );
