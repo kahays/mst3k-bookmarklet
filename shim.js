@@ -228,7 +228,7 @@
 	{
 		/* Load the custom MST3K stylesheet. */
 		var style = document.createElement("link");
-		style.href = "http://localhost/~kate/style.css";
+		style.href = "https://lewis-k.github.io/mst3k/style.css";
 		style.rel = "stylesheet";
 		style.type = "text/css";
 		document.head.appendChild(style);
@@ -268,9 +268,9 @@
 		}
 
 		/* Load other scripts. */
-		$.getScript("http://localhost/~kate/add-chat.js");
-		$.getScript("http://localhost/~kate/theater-mode.js");
-		$.getScript("http://localhost/~kate/watch-it-together.js");
+		$.getScript("https://lewis-k.github.io/mst3k/add-chat.js");
+		$.getScript("https://lewis-k.github.io/mst3k/theater-mode.js");
+		$.getScript("https://lewis-k.github.io/mst3k/watch-it-together.js");
 	}
 
 	/* UTILITY FUNCTIONS */

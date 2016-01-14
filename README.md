@@ -7,13 +7,16 @@ This is a script to enhance the Watch-It-Together experience. It can
 - queue and automatically play videos for supported embeds (YouTube, Dailymotion and Vimeo)
 - catch up to an episode in progress, even after pausing
 
-## Known bugs
+### How to use this
+Simply [add this as a bookmark](http://lewis-k.github.io/shim.js), navigate to [an episode](http://www.club-mst3k.com/820-space-mutiny) and load the bookmark.
+
+### Known bugs
 - Fix race condition where catchUp() fires before the YouTube frame is ready.
 - Fix Dailymotion hiccup where the (Flash?) player has trouble seeking/playing in the right place after the first invocation of catchUp() after it was reloaded.
 - Fix IE message overlay.
 - Ensure support for Chrome, Safari, Firefox and IE.
 
-## Todo
+### Todo
 - Improve code underlying the warning message for embeds with no API support (MetaCafe, Hulu via Dailymotion.)
 - Have a way to reset the time selected for WIT.
 - Make a unified player interface (all we use is play(), seek() and getDuration().)
@@ -21,7 +24,7 @@ This is a script to enhance the Watch-It-Together experience. It can
 - Improve API support for YouTube, Vimeo and Dailymotion embeds.
 - Add API support for Metacafe.
 
-## Notes
+### Notes
 - [Godzilla vs. Megalon](http://www.club-mst3k.com/212-godzilla-vs-megalon) has Dailymotion and YouTube embeds. In Chrome, this will crash if the debugger is open.
 - [Godzilla vs. the Sea Monster](http://www.club-mst3k.com/213-godzilla-vs-the-sea-monster) has Metacafe, YouTube and Dailymotion embeds. The Dailymotion embed is somehow from Hulu and doesn't play nice.
 - [Kitten With a Whip](http://www.club-mst3k.com/615-kitten-with-a-whip) has a Vimeo embed.
