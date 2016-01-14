@@ -11,18 +11,16 @@ This is a script to enhance the Watch-It-Together experience. It can
 Follow the instructions [provided here](http://lewis-k.github.io/mst3k/).
 
 ### Known bugs
-- Fix race condition where catchUp() fires before the YouTube frame is ready.
-- Fix Dailymotion hiccup where the (Flash?) player has trouble seeking/playing in the right place after the first invocation of catchUp() after it was reloaded.
-- Fix IE message overlay.
-- Ensure support for Chrome, Safari, Firefox and IE.
+- The message overlay may be hidden in Internet Explorer.
+- Autoplay may misfire due to a race condition where catchUp() fires before the YouTube frame is ready.
+- Another autoplay hiccup where the Dailymotion player (Flash only?) won't seek/play in the right place the first time we call catchUp() after the video has reloaded.
 
 ### Todo
-- Improve code underlying the warning message for embeds with no API support (MetaCafe, Hulu via Dailymotion.)
-- Have a way to reset the time selected for WIT.
+- Improve code underlying the warning message for embeds with no API support (MetaCafe, Hulu via Dailymotion, bare links.)
+- Have a way to reset the time selected for Watch-It-Together.
 - Make a unified player interface (all we use is play(), seek() and getDuration().)
-- Hulu embeds (via Dailymotion) don't support the Dailymotion API?
 - Improve API support for YouTube, Vimeo and Dailymotion embeds.
-- Add API support for Metacafe.
+- Find API support for Metacafe and Hulu embeds via Dailymotion.
 
 ### Notes
 - [Godzilla vs. Megalon](http://www.club-mst3k.com/212-godzilla-vs-megalon) has Dailymotion and YouTube embeds. In Chrome, this will crash if the debugger is open.
