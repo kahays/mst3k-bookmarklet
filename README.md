@@ -8,7 +8,7 @@ This is a script to enhance the Watch-It-Together experience. It can
 - catch up to an episode in progress, even after pausing
 
 ### How to use this
-Simply <a href="javascript:$.getScript('http://lewis-k.github.io/mst3k/shim.js');">add this as a bookmark</a>, navigate to [an episode](http://www.club-mst3k.com/820-space-mutiny) and load the bookmark.
+Simply [add this as a bookmark][1], navigate to [an episode](http://www.club-mst3k.com/820-space-mutiny) and load the bookmark.
 
 ### Known bugs
 - Fix race condition where catchUp() fires before the YouTube frame is ready.
@@ -28,3 +28,5 @@ Simply <a href="javascript:$.getScript('http://lewis-k.github.io/mst3k/shim.js')
 - [Godzilla vs. Megalon](http://www.club-mst3k.com/212-godzilla-vs-megalon) has Dailymotion and YouTube embeds. In Chrome, this will crash if the debugger is open.
 - [Godzilla vs. the Sea Monster](http://www.club-mst3k.com/213-godzilla-vs-the-sea-monster) has Metacafe, YouTube and Dailymotion embeds. The Dailymotion embed is somehow from Hulu and doesn't play nice.
 - [Kitten With a Whip](http://www.club-mst3k.com/615-kitten-with-a-whip) has a Vimeo embed.
+
+  [1]:javascript:$.getScript('http://lewis-k.github.io/mst3k/shim.js');
