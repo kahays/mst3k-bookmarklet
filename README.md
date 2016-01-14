@@ -8,7 +8,7 @@ This is a script to enhance the Watch-It-Together experience. It can
 - catch up to an episode in progress, even after pausing
 
 ### How to use this
-Simply <a href="javascript:$.getScript('http://lewis-k.github.io/shim.js');">add this as a bookmark</a>, navigate to [an episode](http://www.club-mst3k.com/820-space-mutiny) and load the bookmark.
+Simply <a href="javascript:$.getScript('http://lewis-k.github.io/mst3k/shim.js');">add this as a bookmark</a>, navigate to [an episode](http://www.club-mst3k.com/820-space-mutiny) and load the bookmark.
 
 ### Known bugs
 - Fix race condition where catchUp() fires before the YouTube frame is ready.
