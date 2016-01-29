@@ -1,6 +1,11 @@
 (function(){
 	var originalTlkioHeight = $("#tlkio").height();
-	$("#theater-mode").find("input").on("click", toggleTheaterMode);
+	/* Hacky include guard for multiple loadings. */
+	if (!$("#theater-mode").data("loaded"))
+	{
+		$("#theater-mode").find("input").on("click", toggleTheaterMode);
+		$("#theater-mode").data("loaded", true);
+	}
 
 	function styleTheaterMode()
 	{
