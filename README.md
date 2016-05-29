@@ -23,6 +23,6 @@ Follow the instructions [provided here](http://lewis-k.github.io/mst3k/).
 - Find API support for Metacafe and Hulu embeds via Dailymotion.
 
 ### Notes
-- [Godzilla vs. Megalon](http://www.club-mst3k.com/212-godzilla-vs-megalon) has Dailymotion and YouTube embeds. In Chrome, this will crash if the debugger is open.
-- [Godzilla vs. the Sea Monster](http://www.club-mst3k.com/213-godzilla-vs-the-sea-monster) has Metacafe, YouTube and Dailymotion embeds. The Dailymotion embed is somehow from Hulu and doesn't play nice.
-- [Kitten With a Whip](http://www.club-mst3k.com/615-kitten-with-a-whip) has a Vimeo embed.
+- [Godzilla vs. Megalon](http://www.club-mst3k.com/episodes/212-godzilla-vs-megalon) has Dailymotion and YouTube embeds. In Chrome, this will crash if the debugger is open.
+- [Godzilla vs. the Sea Monster](http://www.club-mst3k.com/episodes/213-godzilla-vs-the-sea-monster) has Metacafe, YouTube and Dailymotion embeds. The Dailymotion embed is somehow from Hulu and doesn't play nice.
+- [Kitten With a Whip](http://www.club-mst3k.com/episodes/615-kitten-with-a-whip) has a Vimeo embed.
