@@ -1,7 +1,7 @@
 (function(){
 	if (!$("#tlkio").length) {
 		/* Ad-hoc, best guess for now. 30-character limit on chat room names. */
-		var chatroom = document.location.pathname.replace(/^\/\d*/, 'MST3k').substr(0, 30);
+		var chatroom = document.location.pathname.replace(/^(.*\d+)/, 'MST3k').substr(0, 30);
 
 		/* Create chatroom container. */
 		$("#posts")
