@@ -143,7 +143,7 @@
 			{
 				/* Always show a message if autoplay isn't supported. */
 				var message = "This video can't be autoplayed. " +
-						(video.errorDescription ? "(" + video.errorDescription + ") " : "") +
+						(video.errorDescription(targetVideo) ? "(" + video.errorDescription(targetVideo) + ") " : "") +
 						"Sorry! Click to clear this message.";
 				this.state.isDisplayingUnsupported = true;
 			}
@@ -248,6 +248,9 @@
 		},
 		isScriptable: function(){
 			return !!$( (arguments.length ? arguments[0] : this.current()) ).prop('player');
+		},
+		errorDescription: function(){
+			return $( (arguments.length ? arguments[0] : this.current()) ).prop('errorDescription');
 		}
 	};
 
