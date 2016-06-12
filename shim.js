@@ -1,4 +1,4 @@
-(function(theaterModeOnly){
+(function(theaterModeOnly, developmentEnvironment){
 	if (theaterModeOnly)
 	{
 		initialize(theaterModeOnly);
@@ -293,11 +293,12 @@
 		}
 
 		/* Load other scripts. */
-		$.getScript("https://lewis-k.github.io/mst3k/add-chat.js");
-		$.getScript("https://lewis-k.github.io/mst3k/theater-mode.js");
+		baseUrl = (developmentEnvironment ? "http://localhost/~kate/" : "https://lewis-k.github.io/"
+		$.getScript(baseUrl + "mst3k/add-chat.js");
+		$.getScript(baseUrl + "mst3k/theater-mode.js");
 		if (!disableAutoplay)
 		{
-			$.getScript("https://lewis-k.github.io/mst3k/watch-it-together.js");
+			$.getScript(baseUrl + "mst3k/watch-it-together.js");
 		}
 	}
 
@@ -326,4 +327,4 @@
 			};
 		})();
 	}
-})(window.MST3KTheaterModeOnly);
+})(window.MST3KTheaterModeOnly, window.MST3KDevelopmentEnvironment);
