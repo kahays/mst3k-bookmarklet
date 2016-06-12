@@ -293,7 +293,7 @@
 		}
 
 		/* Load other scripts. */
-		baseUrl = (developmentEnvironment ? "http://localhost/~kate/" : "https://lewis-k.github.io/"
+		baseUrl = (developmentEnvironment ? "http://localhost/~kate/" : "https://lewis-k.github.io/");
 		$.getScript(baseUrl + "mst3k/add-chat.js");
 		$.getScript(baseUrl + "mst3k/theater-mode.js");
 		if (!disableAutoplay)
