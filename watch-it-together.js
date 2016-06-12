@@ -142,7 +142,9 @@
 			if (!video.isScriptable(targetVideo))
 			{
 				/* Always show a message if autoplay isn't supported. */
-				var message = "This video can't be autoplayed. Sorry! Click to clear this message.";
+				var message = "This video can't be autoplayed. " +
+						(video.errorDescription ? "(" + video.errorDescription + ") " : "") +
+						"Sorry! Click to clear this message.";
 				this.state.isDisplayingUnsupported = true;
 			}
 			/* Make sure we're not showing a message if the user already cleared them. */

@@ -100,6 +100,7 @@
 				return;
 			}
 
+			video.errorDescription = "";
 			if (site === "youtube")
 			{
 				video.player = new YT.Player(video, {
@@ -107,6 +108,16 @@
 						onReady: function(event) {
 							var player = event.target;
 							player.play = player.playVideo;
+							/*
+							** HACK: if a YouTube video doesn't exist, it'll have a duration of zero. The
+							** long-term solution is to actually use the YouTube Data API, which requires
+							** an API key from Google.
+							*/
+							if (player.getDuration() === 0)
+							{
+								video.player = null;
+								video.errorDescription = "The YouTube video may not exist.";
+							}
 							waitForAttachedAPIs();
 						}
 					}
@@ -161,12 +172,14 @@
 					*/
 					if (response['owner.screenname'] === 'hulu')
 					{
+						video.errorDescription = "Videos from Hulu don't have a working Javascript API.";
 						waitForAttachedAPIs();
 					}
 				});
 			}
 			else
 			{
+				video.errorDescription = "This video doesn't have a working Javascript API.";
 				waitForAttachedAPIs();
 			}
 		}
