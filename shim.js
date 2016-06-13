@@ -127,10 +127,16 @@
 			{
 				video.player = Froogaloop(video);
 				video.player.addEvent("ready", function() {
-					video.player.api("getDuration", function(duration){ video.player.getDuration = function(){ return duration; }; });
 					video.player.seekTo = function(time){ video.player.api("seekTo", time); };
 					video.player.play = function(){ video.player.api("play"); };
-					waitForAttachedAPIs();
+					video.player.api("getDuration", function(duration){
+						video.player.getDuration = function(){ return duration; };
+						/*
+						** Moving inside to try and prevent a race condition where watch-it-together
+						** /seems to/ try to access getDuration() before it exists.
+						*/
+						waitForAttachedAPIs();
+					});
 				});
 			}
 			else if (site === "dailymotion")
