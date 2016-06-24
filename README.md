@@ -11,6 +11,7 @@ This is a script to enhance the Watch-It-Together experience. It can
 Follow the instructions [provided here](http://lewis-k.github.io/mst3k/).
 
 ### Known bugs
+- The chat window from [tlk.io](https://tlk.io) may not be functional. This is a [known issue](https://trello.com/c/6kd37wql/278-degrade-to-using-cookies-if-localstorage-is-not-accessible) which can be worked around by changing your browser settings to allow third-party storage from [tlk.io](https://tlk.io), but there's nothing I can do on this end right now. :(
 - The message overlay may be hidden in Internet Explorer.
 - Autoplay may misfire due to a race condition where catchUp() fires before the YouTube frame is ready.
 - Another autoplay hiccup where the Dailymotion player (Flash only?) won't seek/play in the right place the first time we call catchUp() after the video has reloaded.
