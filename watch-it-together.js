@@ -304,7 +304,7 @@
 		var time = new Date(this.referenceTime);
 		time.setHours(
 			this.referenceTime.getHours() + this.hourSelect.selectedIndex,
-			this.minuteSelect.options[this.minuteSelect.selectedIndex[0]].value,
+			this.minuteSelect.options[this.minuteSelect.selectedIndex].value,
 			0,
 			0);
 		var currentMeridian = (time.getHours() < 12 ? "AM" : "PM");
@@ -324,7 +324,7 @@
 	}
 	RollingTimeSelector.prototype.getMeridian = function()
 	{
-		return this.meridianSelect.options[this.meridianSelect].value;
+		return this.meridianSelect.options[this.meridianSelect.selectedIndex].value;
 	}
 
 	RollingTimeSelector.prototype.setTime = function(time)
