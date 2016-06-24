@@ -304,7 +304,7 @@
 		var time = new Date(this.referenceTime);
 		time.setHours(
 			this.referenceTime.getHours() + this.hourSelect.selectedIndex,
-			this.minuteSelect.selectedOptions[0].value,
+			this.minuteSelect.options[this.minuteSelect.selectedIndex[0]].value,
 			0,
 			0);
 		var currentMeridian = (time.getHours() < 12 ? "AM" : "PM");
@@ -316,15 +316,15 @@
 	}
 	RollingTimeSelector.prototype.getHour = function()
 	{
-		return (parseInt(this.hourSelect.selectedOptions[0].value, 10) % 12) + (this.getMeridian() === "PM" ? 12 : 0);
+		return (parseInt(this.hourSelect.options[this.hourSelect.selectedIndex].value, 10) % 12) + (this.getMeridian() === "PM" ? 12 : 0);
 	}
 	RollingTimeSelector.prototype.getMinute = function()
 	{
-		return parseInt(this.minuteSelect.selectedOptions[0].value, 10);
+		return parseInt(this.minuteSelect.options[this.minuteSelect.selectedIndex].value, 10);
 	}
 	RollingTimeSelector.prototype.getMeridian = function()
 	{
-		return this.meridianSelect.selectedOptions[0].value;
+		return this.meridianSelect.options[this.meridianSelect].value;
 	}
 
 	RollingTimeSelector.prototype.setTime = function(time)
