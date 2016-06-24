@@ -28,7 +28,14 @@
 		** use document.readyState to determine if a page is already loaded.
 		*/
 		$.getScript("http://tlk.io/embed.js", function(){
-			window.dispatchEvent(new Event('load'));
+			var e = new Event('load');
+			/* Until Edge, IE doesn't support the Event() syntax. */
+			if (!e)
+			{
+				e = document.createEvent("Event");
+				e.initEvent("load", true, true);
+			}
+			window.dispatchEvent(e);
 		});
 	}
 })();
