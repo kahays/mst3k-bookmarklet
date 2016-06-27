@@ -299,12 +299,12 @@
 		}
 
 		/* Load other scripts. */
-		baseUrl = (developmentEnvironment ? "http://localhost/~kate/" : "https://lewis-k.github.io/");
-		$.getScript(baseUrl + "mst3k/add-chat.js");
-		$.getScript(baseUrl + "mst3k/theater-mode.js");
+		baseUrl = (developmentEnvironment ? "http://localhost/~kate/mst3k/" : "https://lewis-k.github.io/mst3k-bookmarklet/");
+		$.getScript(baseUrl + "add-chat.js");
+		$.getScript(baseUrl + "theater-mode.js");
 		if (!disableAutoplay)
 		{
-			$.getScript(baseUrl + "mst3k/watch-it-together.js");
+			$.getScript(baseUrl + "watch-it-together.js");
 		}
 	}
 
