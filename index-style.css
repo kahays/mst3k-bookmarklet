@@ -1,0 +1,33 @@
+body {
+	width: 728px;
+	margin: 0.5em auto;
+	font-family: sans-serif;
+}
+#container {
+	position: relative;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+#instructions {
+	position: absolute;
+	top: 35%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	width: 710px;
+	padding-left: 16px;
+	border-width: 0 1px;
+	border-style: solid;
+	border-color: #999;
+	background-color: white;
+}
+#disclaimer {
+	border: 1px solid #ccc;
+	padding: 0.8em;
+	text-align: center;
+	font-size: 70%;
+}
+li { padding-top: 0.5em; }
+a { color: #337ab7; }
+#disclaimer a { color: #276a9a; }

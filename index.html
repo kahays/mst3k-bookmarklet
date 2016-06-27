@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Instructions to enhance Club MST3k's Watch-It-Together</title>
+	<link href="index-style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="container">
+		<!--
+			Image is from http://mst3k.wikia.com/wiki/File:Mst3ksol.jpg , with no license
+			currently listed. If you claim the copyright for this, please raise an issue at
+			https://github.com/lewis-k/lewis-k.github.io . Thanks!
+		-->
+		<img src="satellite-of-love.jpg"/>
+		<div id="instructions">
+		<h3>Here's how to use the <a href="https://github.com/lewis-k/mst3k-bookmarklet">Watch-It-Together enhancing script</a> for <a href="http://www.club-mst3k.com/">Club MST3k</a>!</h3>
+		<ol>
+			<li>
+			Add your preferred link as a bookmark:
+				<ul>
+					<li><a href="javascript:(function(){window.MST3KTheaterModeOnly=true;$.getScript('http://lewis-k.github.io/mst3k/shim.js');})();">Allow me to put the chat window next to the movie (theater mode.)</a></li>
+					<li><a href="javascript:(function(){window.MST3KTheaterModeOnly=false;$.getScript('http://lewis-k.github.io/mst3k/shim.js');})();">Give me both theater mode <em>and</em> autoplay functionality.</a></li>
+				</ul>
+			</li>
+			<li>
+			Navigate to <a href="http://www.club-mst3k.com/episodes/820-space-mutiny">an episode</a> and load the bookmark.
+			</li>
+		</ol>
+		</div>
+	</div>
+	<p id="disclaimer">
+	This site is not affiliated with Club MST3k, but I enjoy their work <em><a href="http://www.club-mst3k.com/episodes/816-prince-of-space">very much</a></em>.
+	</p>
+</body>
+</html>

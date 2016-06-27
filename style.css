@@ -1,0 +1,94 @@
+/* STATIC */
+
+#embed-wrapper {
+	position: relative;
+}
+
+#watch-it-together {
+	display: block;
+	float: right;
+	clear: both;
+	font-size: 16px;
+	margin-bottom: 2px;
+}
+
+#watch-it-together a {
+	color: #276a9a;
+	border-width: 2px;
+	border-color: #dd0;
+	border-radius: 0.25em;
+	padding: 0.1em 0.25em;
+
+	/* Default style is inactive. See the dynamic section below. */
+	background-color: #ffa;
+	border-style: outset;
+}
+
+#watch-it-together select {
+	margin: 0 0 3px 0;
+	width: 4em;
+}
+
+#message-box {
+	display: none;
+	width: 60%;
+	padding: 0.5em;
+	position: absolute;
+	top: 25%;
+	left: 20%; /* The center, 50%, minus half the width. */
+	background-color: #fafafa;
+	border-radius: 4px;
+}
+
+#theater-mode {
+	float: right;
+	clear: both;
+	color: #276a9a; /* Constants taken from computed CSS styles for class link_button */
+	background-color: #ffa;
+	border: 1px solid #dd0;
+	border-radius: 0.25em;
+	padding: 0.1em 0.25em;
+	margin-bottom: 2px;
+	font-size: 16px;
+}
+
+/* DYNAMIC (WATCH IT TOGETHER) */
+/* We're not counting hiding or showing the message box here. */
+
+#watch-it-together .watch-it-together-active {
+	background-color: #ee0;
+	border-style: inset;
+}
+
+/* DYNAMIC (THEATER MODE) */
+
+/* Be forewarned: there are two #middles. Specificity saves us here. */
+#middle.theater {
+	/* Widen the aperture (aka "theater mode.") The width is arbitrary; fullscreen looks about right for now. */
+	width: auto;
+}
+
+#content.theater {
+	width: auto;
+	position: relative;
+	float: none;
+	overflow: auto; /* This ensures the background displays over floated elements. ??? */
+	padding-bottom: 0;
+}
+
+/* Split movie and user content to the left and right. */
+#video-content.theater {
+	float: left;
+	width: 650px; /* Constant from CSS class for #content */
+}
+
+#user-content.theater {
+	position: relative;
+	float: right;
+	margin-right: -20px; /* Constant from CSS class for .link */
+}
+
+/* Reduce padding on user tabs so they can compress more without linebreaks. */
+#tab_bar.theater > * {
+	margin: 0;
+}
