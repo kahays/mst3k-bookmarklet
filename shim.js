@@ -257,9 +257,11 @@
 	/* Set up UI and load and execute theater mode and watch-it-together code. */
 	function initialize(disableAutoplay)
 	{
+		var baseUrl = (developmentEnvironment ? "http://localhost/~kate/mst3k/" : "https://lewis-k.github.io/mst3k-bookmarklet/");
+
 		/* Load the custom MST3K stylesheet. We're temporarily skipping an include guard. */
 		var style = document.createElement("link");
-		style.href = "https://lewis-k.github.io/mst3k/style.css";
+		style.href = baseUrl + "style.css";
 		style.rel = "stylesheet";
 		style.type = "text/css";
 		document.head.appendChild(style);
@@ -299,7 +301,6 @@
 		}
 
 		/* Load other scripts. */
-		baseUrl = (developmentEnvironment ? "http://localhost/~kate/mst3k/" : "https://lewis-k.github.io/mst3k-bookmarklet/");
 		$.getScript(baseUrl + "add-chat.js");
 		$.getScript(baseUrl + "theater-mode.js");
 		if (!disableAutoplay)
