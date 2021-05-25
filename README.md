@@ -8,7 +8,7 @@ This is a script to enhance the Watch-It-Together experience. It can
 - catch up to an episode in progress, even after pausing
 
 ### How to use this
-Follow the instructions [provided here](http://lewis-k.github.io/mst3k-bookmarklet/).
+Follow the instructions [provided here](http://kahays.github.io/mst3k-bookmarklet/).
 
 ### Known bugs
 - The chat window from [tlk.io](https://tlk.io) may not be functional. This is a [known issue](https://trello.com/c/6kd37wql/278-degrade-to-using-cookies-if-localstorage-is-not-accessible) which can be worked around by changing your browser settings to allow third-party storage from [tlk.io](https://tlk.io), but there's nothing I can do on this end right now. :(

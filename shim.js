@@ -257,7 +257,7 @@
 	/* Set up UI and load and execute theater mode and watch-it-together code. */
 	function initialize(disableAutoplay)
 	{
-		var baseUrl = (developmentEnvironment ? "http://localhost/~kate/mst3k/" : "https://lewis-k.github.io/mst3k-bookmarklet/");
+		var baseUrl = (developmentEnvironment ? "http://localhost/~kate/mst3k/" : "https://kahays.github.io/mst3k-bookmarklet/");
 
 		/* Load the custom MST3K stylesheet. We're temporarily skipping an include guard. */
 		var style = document.createElement("link");
